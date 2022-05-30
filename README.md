@@ -1,6 +1,5 @@
 # Introduction
 Based on the task that Mr. Zsolt Csapi from Sophos in Hungary sent me, I should develop an application that finds the cheapest meal of each day on the menu containing "csirkemell" (chicken breast) from page "[https://www.teletal.hu/etlap/24](https://www.teletal.hu/etlap/24)" which is week 24 menu.
-
 So I developed an application that is a bit more dynamic, which can search different components, e.g., "baconos", "gomba" or "marha". Also can crawl through other weeks' menus, e.g., "[https://www.teletal.hu/etlap/22](https://www.teletal.hu/etlap/22)" or "[https://www.teletal.hu/etlap/23](https://www.teletal.hu/etlap/23)" or any future generated menu.
 
 **P.S.**: Search term should be in the Hungarian language!
@@ -88,7 +87,7 @@ After scraping data with the mentioned methods, as the scraped data are in HTML 
 </table>
 ```
 
-The next step is putting this raw data in a proper data structure, which in this case, I use a nested dictionary. A sample of imported data is shown below. The attached screenshot shows how I used keys namings.
+The next step is putting this raw data in a proper data structure, which in this case, I use a nested dictionary. A sample of imported data is shown below. The attached screenshot shows how I used keys namings (click on the image to get a clear view).
 
 ```json
 {"Table_Name" : {
@@ -111,3 +110,37 @@ The next step is putting this raw data in a proper data structure, which in this
 ```
 
 ![enter image description here](https://github.com/hmadadian/sophos/blob/main/doc-image/How-it-works-1.png?raw=true)
+
+Then with the recursive method, search in the dictionary and find a food description containing the initiate search term! If there is no search term in the description, the sub-root and root will be removed.
+After filtering the dictionary, we must get the minimum price for a specific day. In another method, run the mentioned method for each day of the week and store the result in a new dictionary.
+
+### 3. Output
+The result dictionary can be exported in 3 formats:
+
+ 1. Text-based table (print in CLI or store in a file) - Default Exporting Method
+ 2. Save the table in HTML format and show it in the browser
+ 3. Export the data in JSON format (print in CLI or store in a file)
+
+# Algorithm and Data Structures
+There are 5 files as described below:
+
+ 1. `reverse_enginning.py`: Scraping class with reverse engineering method.
+ 2. `selenium_scrap.py`: Scraping class with selenium method.
+ 3. `table_process.py`: Processing scraped data, filtering and sorting class.
+ 4. `output.py`: Create formatted result (Table, HTML, JSON) as output.
+ 5. `main.py`: Handle CLI arguments and execute the application based on other objects and classes.
+
+### 1. reverse_enginning.py
+
+Attributes:  
+1. `__url` (attributes, protected, str) set by the `url` variable in class initiation
+2. `__ajax_url` (attributes, protected, str) set to ajax url staticly
+3. `__cookies` (attributes, protected, dict) set as empty dictionary in class initiation
+4. `__scraped_data` (attributes, protected, None) set as None in class initiation
+5. `__none_tables` (attributes, protected, list) set as empty list in class initiation
+6. `__tables_content` (attributes, protected, dict) set as empty dictionary in class initiation
+
+Methods:
+1. `scrape` (method, public, without argument, return dictionary object) is executing `requests` to get primary HTML content and assign it to `__scraped_data` attribute with `BeautifulSoup` HTML parser. also, assign the cookie to `__cookies` attribute. then execute `__get_tables_ajax` method.
+2. `__get_tables_ajax` (method, protected, without argument, without return) get the related `section` tags and grab values of tags' attributes. Iterate the values and send a request with the saved cookie to the ajax URL. Assign retrieved data as dictionary value and table name as the key in `__tables_content`. Append table names of those which can not retrieve in `__none_tables`. Then execute `__get_tables_website`.
+3. `__get_tables_website` (method, protected, without argument, without return) is trying to retrieve the content of the tables (which is not found in Ajax) from the primary HTML source. Then join it with `__tables_content`.
