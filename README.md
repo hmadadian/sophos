@@ -12,6 +12,13 @@ There are a couple of challenges related to different sections, such as scraping
 Lazyload is Ajax/JS component that makes the website faster by loading content when the user reaches a specific position in the website by scrolling down or clicking. So the mechanism of lazyloading is rendering a simpler HTML version when the user opens the website. If the user scrolls down or clicks on some object, a javascript code will retrieve data and overwrite the current HTML code. So, in this case, we can not simply grab the HTML of the website because it would be a pre-lazyloading content in which no useful information is there!
 
 ### 2. Full Day Menu (Concept Challenge)
-If you look at the other tables, the concept is horizontal, meaning there is a row for every column (each represents the days of the week). But there is an exception! A menu called "Full Day Menu" is vertical, meaning all the rows of a column are for one meal and can only be bought as a pack! The screenshot attached below will clear everything up.
+If you look at the other tables, the concept is horizontal, meaning there is a row for every column (each represents the days of the week). But there is an exception! A menu called "Full Day Menu" is vertical, meaning all the rows of a column are for one meal and can only be bought as a pack! The screenshot attached below will clear everything up (click on the image to get a clear view).
 
 ![Full Day Menu](https://github.com/hmadadian/sophos/blob/main/doc-image/Challenge-2.png?raw=true)
+
+### 3. Empty Cells in Menu
+It seems some days the restaurant is not working or on some specific days don't serve specific food. This may cause an empty cell (hole) in the menu. The screenshots attached below will clear everything up (click on the image to get a clear view).
+
+![enter image description here](https://github.com/hmadadian/sophos/blob/main/doc-image/Challenge-3-1.png?raw=true)
+
+![enter image description here](https://github.com/hmadadian/sophos/blob/main/doc-image/Challenge-3-2.png?raw=true)
