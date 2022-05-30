@@ -65,3 +65,49 @@ Using selenium library and web drive helps us open a browser (in this case, in t
 
 #### C. XLS File (Not operational) :
 There is another way to retrieve data, and it is from an XML file downloadable on the menu page. The problem with this method that causes it impracticable is that there is some missing information in it, including the prices of some meals or menus. For instance, "Full Day Menu". However %95 websites don't support this kind of exporting, so this method is not operatable in most cases!
+
+### 2. Processing scraped data and using proper data structure and algorithm for filtering and sorting:
+After scraping data with the mentioned methods, as the scraped data are in HTML table format (as displayed below), we should first extract the raw data.
+```
+<table>
+  <tr>
+    <th>...</th>
+    <th>...</th>
+    <th>...</th>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+</table>
+```
+
+The next step is putting this raw data in a proper data structure, which in this case, I use a nested dictionary. A sample of imported data is shown below. The attached screenshot shows how I used keys namings.
+
+```json
+{"Table_Name" : {
+    "Row_Name": {
+      "Food_Type": {
+        "Days_of_week": [
+          {
+            "food_description": "<>",
+            "food_price": <>
+          }
+          .....
+        ]
+      }
+      .....
+    }
+    .....
+  }
+  .....
+  }
+```
+
+![enter image description here](https://github.com/hmadadian/sophos/blob/main/doc-image/How-it-works-1.png?raw=true)
