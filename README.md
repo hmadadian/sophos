@@ -1,5 +1,6 @@
 # Introduction
 Based on the task that Mr. Zsolt Csapi from Sophos in Hungary sent me, I should develop an application that finds the cheapest meal of each day on the menu containing "csirkemell" (chicken breast) from page "[https://www.teletal.hu/etlap/24](https://www.teletal.hu/etlap/24)" which is week 24 menu.
+
 So I developed an application that is a bit more dynamic, which can search different components, e.g., "baconos", "gomba" or "marha". Also can crawl through other weeks' menus, e.g., "[https://www.teletal.hu/etlap/22](https://www.teletal.hu/etlap/22)" or "[https://www.teletal.hu/etlap/23](https://www.teletal.hu/etlap/23)" or any future generated menu.
 
 **P.S.**: Search term should be in the Hungarian language!
