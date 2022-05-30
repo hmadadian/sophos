@@ -22,3 +22,46 @@ It seems some days the restaurant is not working or on some specific days don't 
 ![enter image description here](https://github.com/hmadadian/sophos/blob/main/doc-image/Challenge-3-1.png?raw=true)
 
 ![enter image description here](https://github.com/hmadadian/sophos/blob/main/doc-image/Challenge-3-2.png?raw=true)
+
+# How it Works
+The application contains 3 parts which will be described in different sections below!
+
+### 1. Scraping:
+As mentioned in the challenges section, there are two operational solutions for this part.
+#### A. Reverse Enginning:
+In this case, we should find the URL that the javascript tries to load the content. Which in this case, it is as below:
+
+    https://www.teletal.hu/ajax/szekcio?ev=<>&het=<>&ewid=<>&varname=<>
+     
+All the values can retrieve from the section tag in the primary HTML. For instance:
+```
+<section class="uk-section uk-section-xsmall uk-section-default teletal-fozelekek" ev="2022" het="23" ewid="162900767" section="Főzelék" lang="hu">
+```
+**P.S.**: After loading the web page to get values from section tags, we should save the **PHPSESSID** cookie and include it in our requests header. Because without this cookie, the webserver return error!
+
+**Pros**: 
+ - Faster scraping
+ - Less Resource Usage
+ - More Reliable (usually no need to change the code if the style of the site changes)
+
+**Cons**: 
+ - Not always easy to find out the way.
+ - Calling URL or API request format might change.
+ - Retrieved data might be encoded, and decoding throws the encoded javascript!
+
+#### B. Selenium Library and Web Driver:
+Using selenium library and web drive helps us open a browser (in this case, in the background) and simulate the scrolling down. After getting to the bottom of the page and all javascript executed by the browser javascript engine, it returns the final HTML source code.
+
+**Pros**:
+
+- The easiest way to scraping
+- Guaranteed that get the final HTML source
+
+**Cons**:
+
+- More time to scrape and execute javascript.
+- More resources for executing web driver.
+- Need fo redeveloping if website style change.
+
+#### C. XLS File (Not operational) :
+There is another way to retrieve data, and it is from an XML file downloadable on the menu page. The problem with this method that causes it impracticable is that there is some missing information in it, including the prices of some meals or menus. For instance, "Full Day Menu". However %95 websites don't support this kind of exporting, so this method is not operatable in most cases!
