@@ -6,7 +6,7 @@ So I developed an application that is a bit more dynamic, which can search diffe
 **P.S.**: Search term should be in the Hungarian language!
 
 # Challenges
-There are a couple of challenges related to different sections, such as scraping, processing, and concept.
+There are a couple of challenges related to different sections, such as scraping, data processing, and concept.
 
 ### 1. Website using Lasy Load component (Scraping Challenge)
 Lazyload is Ajax/JS component that makes the website faster by loading content when the user reaches a specific position in the website by scrolling down or clicking. So the mechanism of lazyloading is rendering a simpler HTML version when the user opens the website. If the user scrolls down or clicks on some object, a javascript code will retrieve data and overwrite the current HTML code. So, in this case, we can not simply grab the HTML of the website because it would be a pre-lazyloading content in which no useful information is there!
@@ -16,7 +16,7 @@ If you look at the other tables, the concept is horizontal, meaning there is a r
 
 ![Full Day Menu](https://github.com/hmadadian/sophos/blob/main/doc-image/Challenge-2.png?raw=true)
 
-### 3. Empty Cells in Menu
+### 3. Empty Cells in Menu (Data Processing Challenge)
 It seems some days the restaurant is not working or on some specific days don't serve specific food. This may cause an empty cell (hole) in the menu. The screenshots attached below will clear everything up (click on the image to get a clear view).
 
 ![enter image description here](https://github.com/hmadadian/sophos/blob/main/doc-image/Challenge-3-1.png?raw=true)
