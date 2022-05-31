@@ -227,9 +227,8 @@ Now it is time to run the application with desired arguments. A list of argument
 ```bash
 > python main.py [-h] [--scraping-method [<Scraping-Method>]] [--search-term [<Search-Term>]] [--link [<Teletal-Menu-Link>]] [--output [<Result-Output>]]
 ```
-**options:**
+**Options:**
 ```bash
-options:
   -h, --help            show this help message and exit
   --scraping-method [<Scraping-Method>]
                         There are two types of scraping methods for this application. Use "selenium" for scraping the web page using the Selenium library, or use "reverse" for scraping the
