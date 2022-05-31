@@ -125,23 +125,61 @@ The result dictionary can be exported in 3 formats:
 # Algorithm and Data Structures
 There are 5 files as described below:
 
- 1. `reverse_enginning.py`: Scraping class with reverse engineering method.
- 2. `selenium_scrap.py`: Scraping class with selenium method.
- 3. `table_process.py`: Processing scraped data, filtering and sorting class.
- 4. `output.py`: Create formatted result (Table, HTML, JSON) as output.
+ 1. `reverse_enginning.py`: Contain `ReverseEnginning` class for scraping with reverse engineering method.
+ 2. `selenium_scrap.py`: Contain `SeleniumScrap` class for scraping with selenium method.
+ 3. `table_process.py`: Contain `TableProcess` class for processing scraped data, filtering and sorting class.
+ 4. `output.py`: Contain `Output` class for creating formatted result (Table, HTML, JSON) as output.
  5. `main.py`: Handle CLI arguments and execute the application based on other objects and classes.
 
-### 1. reverse_enginning.py
+### 1. reverse_enginning.py (ReverseEnginning Class)
 
 Attributes:  
-1. `__url` (attributes, protected, str) set by the `url` variable in class initiation
-2. `__ajax_url` (attributes, protected, str) set to ajax url staticly
-3. `__cookies` (attributes, protected, dict) set as empty dictionary in class initiation
-4. `__scraped_data` (attributes, protected, None) set as None in class initiation
-5. `__none_tables` (attributes, protected, list) set as empty list in class initiation
-6. `__tables_content` (attributes, protected, dict) set as empty dictionary in class initiation
+1. `__url` (attributes, protected, str) set by the `url` variable in class initiation.
+2. `__ajax_url` (attributes, protected, str) set to ajax url staticly.
+3. `__cookies` (attributes, protected, dict) set as empty dictionary in class initiation.
+4. `__scraped_data` (attributes, protected, None) set as None in class initiation.
+5. `__none_tables` (attributes, protected, list) set as empty list in class initiation.
+6. `__tables_content` (attributes, protected, dict) set as empty dictionary in class initiation.
 
 Methods:
-1. `scrape` (method, public, without argument, return dictionary object) is executing `requests` to get primary HTML content and assign it to `__scraped_data` attribute with `BeautifulSoup` HTML parser. also, assign the cookie to `__cookies` attribute. then execute `__get_tables_ajax` method.
+1. `scrape` (method, public, without argument, return dictionary object) is executing `requests` to get primary HTML content and assign it to `__scraped_data` attribute with `BeautifulSoup` HTML parser. also, assign the cookie to `__cookies` attribute. then execute `__get_tables_ajax` method. At the end returns `__tables_content`.
 2. `__get_tables_ajax` (method, protected, without argument, without return) get the related `section` tags and grab values of tags' attributes. Iterate the values and send a request with the saved cookie to the ajax URL. Assign retrieved data as dictionary value and table name as the key in `__tables_content`. Append table names of those which can not retrieve in `__none_tables`. Then execute `__get_tables_website`.
 3. `__get_tables_website` (method, protected, without argument, without return) is trying to retrieve the content of the tables (which is not found in Ajax) from the primary HTML source. Then join it with `__tables_content`.
+
+### 2. selenium_scrap.py (SeleniumScrap Class)
+
+Attributes:  
+1. `__url` (attributes, protected, str) set by the `url` variable in class initiation.
+2. `SCROLL_PAUSE_TIME` (attributes, public, float) set to 0.7s for scrolling the page down in class initiation.
+3. `__driver` (attributes, protected, object) set as chrome web driver in class initiation
+4. `__scraped_data` (attributes, protected, None) set as None in class initiation
+5. `__tables_content` (attributes, protected, dict) set as empty dictionary in class initiation
+
+Methods:
+1. `scrape` (method, public, without argument, return dictionary object) is scrolling down with web driver and retrieving the full HTML content with selenium. Then assign it to `__scraped_data` attribute with `BeautifulSoup` HTML parser. Then execute `__get_tables` method. At the end returns `__tables_content`.
+2. `__get_tables` (method, protected, without argument, without return) get the related `section` tags and data. Assign retrieved data as dictionary value and table name as the key in `__tables_content`.
+
+### 3. table_process.py (TableProcess Class)
+
+Attributes:  
+1. `__data` (attributes, protected, object) set by the `scrape_data` variable in class initiation.
+2. `__all_tables_dict` (attributes, protected, dict) set as empty dictionary in class initiation.
+3. `__week_days` (attributes, protected, list) set as list of days in a week (in Hungarian) in class initiation.
+4. `__filtered_dict` (attributes, protected, dict) set as empty dictionary in class initiation.
+
+Methods:
+1. `create_dict` (method, public, without argument, without return) is extracting the raw data with `BeautifulSoup` and create a nested dictionary. Also, dealing with challenges [#2](https://github.com/hmadadian/sophos#2-full-day-menu-concept-challenge) and [#3](https://github.com/hmadadian/sophos#3-empty-cells-in-menu-data-processing-challenge). Then assign the final result to `__all_tables_dict`.
+2. `filter_dict` (method, public, with argument, without return) pass the search term as an argument and try to recursively find the search term in `__all_tables_dict`. Eliminate all roots and subroutes if they don't contain the search term. Then assign the final result to `__filtered_dict`.
+3. `__get_min_price_by_day` (method, protected, with argument, return dictionary object) pass the day name (in Hungarian) as an argument, then return the minimum price food information for that specific day.
+4. `get_cheapest_food_week` (method, public, without argument, return dictionary object) is calling `__get_min_price_by_day` with each day in `__week_days` and return a dictionary of all day's result.
+
+### 4. output.py (Output Class)
+
+Attributes:  
+1. `__result` (attributes, protected, dict) set by the `result` variable in class initiation.
+2. `__df` (attributes, protected, object) set to `pandas` DataFrame with given `result`.
+
+Methods:
+1. `to_html` (method, public, with argument, without return) passing a string as HTML `filename` to save exported HTML and open it in browser. The default `filename` value is `result.html`
+2. `to_table` (method, public, with argument, conditional return) passing a string as a text `filename` to save exported table formatted data in a text file. Passing `print_result` for either save it in a file or print it in CLI console. The default `filename` value is `result.txt`, and the default `print_result` value is True.
+3. `to_json` (method, public, with argument, conditional return) passing a string as a text `filename` to save exported JSON formatted data in a JSON file. Passing `print_result` for either save it in a file or print it in CLI console. The default `filename` value is `result.json`, and the default `print_result` value is True.
