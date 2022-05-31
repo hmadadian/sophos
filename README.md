@@ -183,3 +183,67 @@ Methods:
 1. `to_html` (method, public, with argument, without return) passing a string as HTML `filename` to save exported HTML and open it in browser. The default `filename` value is `result.html`
 2. `to_table` (method, public, with argument, conditional return) passing a string as a text `filename` to save exported table formatted data in a text file. Passing `print_result` for either save it in a file or print it in CLI console. The default `filename` value is `result.txt`, and the default `print_result` value is True.
 3. `to_json` (method, public, with argument, conditional return) passing a string as a text `filename` to save exported JSON formatted data in a JSON file. Passing `print_result` for either save it in a file or print it in CLI console. The default `filename` value is `result.json`, and the default `print_result` value is True.
+
+# How to Run
+
+### 1. Create a virtual environment
+
+A. Create a directory (Folder)
+B. Download the source codes and move to the newly created directory in step A
+C. Open a Terminal / Command Prompt / Powershell (based on your OS)
+D. Change the directory to the newly created directory in step A
+E. Create a venv environment with the below command
+```
+python -m venv .
+```
+F. Activate venv with the below command (based on your OS)
+```bash
+### For Command Prompt
+.\Scripts\activate.bat
+
+### For Powershell
+.\Scripts\Activate.ps1
+
+### For Linux Terminal
+./Scripts/activate
+```
+
+### 2. Install dependencies and required libraries
+
+Run the following command to install dependencies and required libraries automatically (based on your OS).
+```bash
+### For Windows
+pip install -r .\requirements.txt
+
+### For Linux
+pip install -r ./requirements.txt
+```
+
+### 3. Run the application
+
+Now it is time to run the application with desired arguments. A list of arguments and descriptions is mentioned below.
+
+**Usage:**
+```bash
+> python main.py [-h] [--scraping-method [<Scraping-Method>]] [--search-term [<Search-Term>]] [--link [<Teletal-Menu-Link>]] [--output [<Result-Output>]]
+```
+**options:**
+```bash
+options:
+  -h, --help            show this help message and exit
+  --scraping-method [<Scraping-Method>]
+                        There are two types of scraping methods for this application. Use "selenium" for scraping the web page using the Selenium library, or use "reverse" for scraping the
+                        web page using methods that I found by reverse engineering! default is "reverse"
+  --search-term [<Search-Term>]
+                        Enter the desired meal name as a search term. This will search the entire menu to find meals containing that component.
+  --link [<Teletal-Menu-Link>]
+                        Specify the link to the menu on the Teletal website. e.g., "https://www.teletal.hu/etlap/24"
+  --output [<Result-Output>]
+                        Use "html" for exporting data to an HTML file and show in the browser, or use "table" to show in tabled (markdown) format in a text file, or use "json" to show in
+                        JSON format in CLI! default is "table".
+```
+
+For instance, the following command will execute with the `selenium` scraping method and `csirkemell` as the search term and `https://www.teletal.hu/etlap/22` as the menu link and `html` as the output format.
+```bash
+python main.py --scraping-method "selenium" --search-term "csirkemell" --link "https://www.teletal.hu/etlap/22" --output "html"
+```
